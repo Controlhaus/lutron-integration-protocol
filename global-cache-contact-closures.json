@@ -1,0 +1,252 @@
+{
+  "friendlyName": "Global Cache iTach Flex Contact Closures",
+  "serviceName": "global-cache-contact-closures",
+  "manufacturer": "Global Cache",
+  "model": "iTach Flex Contact Closures",
+  "parameters": [
+    {
+      "parameter": "ipAddress",
+      "friendlyName": "IP Address",
+      "type": "string",
+      "required": true,
+      "placeholder": "Enter the IP address or host name.",
+      "tooltip": ""
+    },{
+      "parameter": "port",
+      "friendlyName": "Port",
+      "type": "number",
+      "required": false,
+      "placeholder": "Optional TCP port (defaults to 4998).",
+      "tooltip": ""
+    },{
+      "parameter": "relayPort",
+      "friendlyName": "Relay Port",
+      "type": "string",
+      "required": false,
+      "placeholder": "Optional replay port (defaults to 1).",
+      "tooltip": ""
+    }
+  ],
+  "commands":[
+    {
+      "friendlyName": "Connect",
+      "editable": false,
+      "pattern": "connect",
+      "useHex": false,
+      "endWith": "n",
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "Connects the tcp socket."
+        }
+      ]
+    },{
+      "friendlyName": "Close",
+      "editable": false,
+      "pattern": "close",
+      "useHex": false,
+      "endWith": "n",
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "Closes the tcp socket."
+        }
+      ]
+    },{
+      "friendlyName": "Open Relay 1",
+      "editable": false,
+      "pattern": "openRelay1",
+      "useHex": false,
+      "endWith": "n",
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "Opens relay 1 on the specified port."
+        }
+      ]
+    },{
+      "friendlyName": "Close Relay 1",
+      "editable": false,
+      "pattern": "closeRelay1",
+      "useHex": false,
+      "endWith": "n",
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "Closes relay 1 on the specified port."
+        }
+      ]
+    },{
+      "friendlyName": "Get Relay 1",
+      "editable": false,
+      "pattern": "getRelay1",
+      "useHex": false,
+      "endWith": "n",
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "Gets the state of relay 1 on the specified port."
+        }
+      ]
+    },{
+      "friendlyName": "Open Relay 2",
+      "editable": false,
+      "pattern": "openRelay2",
+      "useHex": false,
+      "endWith": "n",
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "Opens relay 2 on the specified port."
+        }
+      ]
+    },{
+      "friendlyName": "Close Relay 2",
+      "editable": false,
+      "pattern": "closeRelay2",
+      "useHex": false,
+      "endWith": "n",
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "Closes relay 2 on the specified port."
+        }
+      ]
+    },{
+      "friendlyName": "Get Relay 2",
+      "editable": false,
+      "pattern": "getRelay2",
+      "useHex": false,
+      "endWith": "n",
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "Gets the state of relay 2 on the specified port."
+        }
+      ]
+    },{
+      "friendlyName": "Open Relay 3",
+      "editable": false,
+      "pattern": "openRelay3",
+      "useHex": false,
+      "endWith": "n",
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "Opens relay 3 on the specified port."
+        }
+      ]
+    },{
+      "friendlyName": "Close Relay 3",
+      "editable": false,
+      "pattern": "closeRelay3",
+      "useHex": false,
+      "endWith": "n",
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "Closes relay 3 on the specified port."
+        }
+      ]
+    },{
+      "friendlyName": "Get Relay 3",
+      "editable": false,
+      "pattern": "getRelay3",
+      "useHex": false,
+      "endWith": "n",
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "Gets the state of relay 3 on the specified port."
+        }
+      ]
+    },{
+      "friendlyName": "Send Command",
+      "editable": true,
+      "pattern": "send: COMMAND",
+      "useHex": false,
+      "endWith": "n",
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "Sends COMMAND directly to the device."
+        }
+      ]
+    }
+  ],
+  "responses":[
+    {
+      "friendlyName": "Connection State",
+      "editable": false,
+      "pattern": "{connected:(.+)$}",
+      "useHex": false,
+      "useRegularExpression": false,
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "Indicates when the TCP connection state."
+        }
+      ]
+    },{
+      "friendlyName": "Connection Error",
+      "editable": false,
+      "pattern": "{socketError:(.+)$}",
+      "useHex": false,
+      "useRegularExpression": false,
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "Indicates when the TCP connection state."
+        }
+      ]
+    },{
+      "friendlyName": "Error",
+      "editable": false,
+      "pattern": "{error:(.+)$}",
+      "useHex": false,
+      "useRegularExpression": false,
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "Indicates when an error occured."
+        }
+      ]
+    },{
+      "friendlyName": "Relay 1 State",
+      "editable": false,
+      "pattern": "{relay1:(.+)$}",
+      "useHex": false,
+      "useRegularExpression": false,
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "The state of relay 1."
+        }
+      ]
+    },{
+      "friendlyName": "Relay 2 State",
+      "editable": false,
+      "pattern": "{relay2:(.+)$}",
+      "useHex": false,
+      "useRegularExpression": false,
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "The state of relay 2."
+        }
+      ]
+    },{
+      "friendlyName": "Relay 3 State",
+      "editable": false,
+      "pattern": "{relay3:(.+)$}",
+      "useHex": false,
+      "useRegularExpression": false,
+      "descriptions": [
+        {
+          "title": "Description",
+          "body": "The state of relay 3."
+        }
+      ]
+    }
+  ]
+}
