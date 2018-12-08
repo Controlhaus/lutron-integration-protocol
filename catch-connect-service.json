@@ -3,6 +3,12 @@
   "serviceName": "global-cache-contact-closures",
   "manufacturer": "Global Cache",
   "model": "iTach Flex Contact Closures",
+  "buildUrls": {
+    "linux": "https://github.com/Controlhaus/global-cache-contact-closures/raw/master/main-linux",
+    "mac": "https://github.com/Controlhaus/global-cache-contact-closures/raw/master/main-macos",
+    "raspberryPi3": "",
+    "windows": "https://github.com/Controlhaus/global-cache-contact-closures/raw/master/main-win.exe"
+  },
   "parameters": [
     {
       "parameter": "ipAddress",
@@ -11,14 +17,16 @@
       "required": true,
       "placeholder": "Enter the IP address or host name.",
       "tooltip": ""
-    },{
+    },
+    {
       "parameter": "port",
       "friendlyName": "Port",
       "type": "number",
       "required": false,
       "placeholder": "Optional TCP port (defaults to 4998).",
       "tooltip": ""
-    },{
+    },
+    {
       "parameter": "relayPort",
       "friendlyName": "Relay Port",
       "type": "string",
@@ -27,7 +35,7 @@
       "tooltip": ""
     }
   ],
-  "commands":[
+  "commands": [
     {
       "friendlyName": "Connect",
       "editable": false,
@@ -40,7 +48,8 @@
           "body": "Connects the tcp socket."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Close",
       "editable": false,
       "pattern": "close",
@@ -52,7 +61,8 @@
           "body": "Closes the tcp socket."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Open Relay 1",
       "editable": false,
       "pattern": "openRelay1",
@@ -64,7 +74,8 @@
           "body": "Opens relay 1 on the specified port."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Close Relay 1",
       "editable": false,
       "pattern": "closeRelay1",
@@ -76,7 +87,8 @@
           "body": "Closes relay 1 on the specified port."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Get Relay 1",
       "editable": false,
       "pattern": "getRelay1",
@@ -88,7 +100,8 @@
           "body": "Gets the state of relay 1 on the specified port."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Open Relay 2",
       "editable": false,
       "pattern": "openRelay2",
@@ -100,7 +113,8 @@
           "body": "Opens relay 2 on the specified port."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Close Relay 2",
       "editable": false,
       "pattern": "closeRelay2",
@@ -112,7 +126,8 @@
           "body": "Closes relay 2 on the specified port."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Get Relay 2",
       "editable": false,
       "pattern": "getRelay2",
@@ -124,7 +139,8 @@
           "body": "Gets the state of relay 2 on the specified port."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Open Relay 3",
       "editable": false,
       "pattern": "openRelay3",
@@ -136,7 +152,8 @@
           "body": "Opens relay 3 on the specified port."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Close Relay 3",
       "editable": false,
       "pattern": "closeRelay3",
@@ -148,7 +165,8 @@
           "body": "Closes relay 3 on the specified port."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Get Relay 3",
       "editable": false,
       "pattern": "getRelay3",
@@ -160,7 +178,8 @@
           "body": "Gets the state of relay 3 on the specified port."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Send Command",
       "editable": true,
       "pattern": "send: COMMAND",
@@ -174,7 +193,7 @@
       ]
     }
   ],
-  "responses":[
+  "responses": [
     {
       "friendlyName": "Connection State",
       "editable": false,
@@ -187,7 +206,8 @@
           "body": "Indicates when the TCP connection state."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Connection Error",
       "editable": false,
       "pattern": "{socketError:(.+)$}",
@@ -199,7 +219,8 @@
           "body": "Indicates when the TCP connection state."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Error",
       "editable": false,
       "pattern": "{error:(.+)$}",
@@ -211,7 +232,8 @@
           "body": "Indicates when an error occured."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Relay 1 State",
       "editable": false,
       "pattern": "{relay1:(.+)$}",
@@ -223,7 +245,8 @@
           "body": "The state of relay 1."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Relay 2 State",
       "editable": false,
       "pattern": "{relay2:(.+)$}",
@@ -235,7 +258,8 @@
           "body": "The state of relay 2."
         }
       ]
-    },{
+    },
+    {
       "friendlyName": "Relay 3 State",
       "editable": false,
       "pattern": "{relay3:(.+)$}",
