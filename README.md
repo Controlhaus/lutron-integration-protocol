@@ -1,7 +1,5 @@
 # Global Cache iTach Contact Closures
-
-## What is this for?
-To control Global Cache iTach Contact Closures via TCP.  
+Controls Global Cache iTach Contact Closures via TCP.  
 
 ## Usage  
 ```git clone https://github.com/Controlhaus/global-cache-contact-closures``` 
