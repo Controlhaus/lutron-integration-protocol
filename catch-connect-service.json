@@ -1,4 +1,5 @@
 {
+  "version": "0.1.1",
   "friendlyName": "Global Cache iTach Flex Contact Closures",
   "serviceName": "global-cache-contact-closures",
   "manufacturer": "Global Cache",
@@ -29,7 +30,7 @@
     {
       "parameter": "relayPort",
       "friendlyName": "Relay Port",
-      "type": "string",
+      "type": "number",
       "required": false,
       "placeholder": "Optional replay port (defaults to 1).",
       "tooltip": ""
