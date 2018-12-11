@@ -15,6 +15,7 @@
       "parameter": "ipAddress",
       "friendlyName": "IP Address",
       "type": "string",
+      "default": "",
       "required": true,
       "placeholder": "Enter the IP address or host name.",
       "tooltip": ""
@@ -23,6 +24,7 @@
       "parameter": "port",
       "friendlyName": "Port",
       "type": "number",
+      "default": 4998,
       "required": false,
       "placeholder": "Optional TCP port (defaults to 4998).",
       "tooltip": ""
@@ -31,6 +33,7 @@
       "parameter": "relayPort",
       "friendlyName": "Relay Port",
       "type": "number",
+      "default": 1,
       "required": false,
       "placeholder": "Optional replay port (defaults to 1).",
       "tooltip": ""
