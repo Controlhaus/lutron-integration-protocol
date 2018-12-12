@@ -11,11 +11,15 @@ var reconnectTimeout;
 var doNotReconnect;
 var retrying;
 
+/* Startup */
+
+connect();
+
 /* Command Line Interface */
 
 repl.start({ prompt: '> ', eval: evaulateCliCommands });
 function evaulateCliCommands(command, context, filename, callback) {
-  send(command);
+  processCommand(command);
   callback(null, 'OK');
 }
 
@@ -23,9 +27,19 @@ function log(message) {
   console.log(serviceName + ': ' + message);
 }
 
+/* Catch Connect Client Messages */
+
+process.on("message", (data) => {
+  processCommand(data);
+});
+
+function sendResponse(response) {
+  process.send(response);
+}
+
 /* Create Device Commands */
 
-function send(command) {
+function processCommand(command) {
   switch (command) {
     case 'connect\n':
       connect();
@@ -81,19 +95,19 @@ function parseResponse(response) {
       if (portSlot.length == 2) {
         const slot = 'relay' + portSlot[1];
         var value = false;
-        if (responseArray[2] == '1') {
+        if (responseArray[2] == 1) {
           value = true;
         }
-        /*var result;
+        var result = {};
         result[slot] = value;
-        return result;*/
+        sendResponse(JSON.stringify(result));
       }
     }
   }
   if (response.indexOf('err,' + relayPort + ':') != -1) {
-    /*var result;
+    var result = {};
     result['error'] = value;
-    return result;*/
+    sendResponse(JSON.stringify(result));
   }
 }
 
@@ -132,9 +146,6 @@ function connect() {
 }
 
 function close() {
-/*result['connected'] = false;
-return result;*/
-
   if (client) {
     if (reconnectTimeout) {
       clearTimeout(reconnectTimeout);
@@ -150,19 +161,18 @@ return result;*/
 
 function connectEventHandler() {
   log('Socket connected.');
-  /*result['connected'] = true;
-return result;*/
+  sendResponse('catch-service-connected');
   retrying = false;
   client.setKeepAlive(true);
 }
 
 function endEventHandler() {
+  sendResponse('catch-service-disconnected');
   log('Socket end event.');
 }
 
 function timeoutEventHandler() {
-  /*result['connected'] = false;
-return result;*/
+  sendResponse('catch-service-disconnected');
   log('Socket timeout event.');
 }
 
@@ -171,14 +181,11 @@ function drainEventHandler() {
 }
 
 function errorEventHandler(err) {
-  /*result['socketError'] = err;
-return result;*/
   log('Socket error: ' + err);
 }
 
 function closeEventHandler() {
-    /*result['connected'] = false;
-return result;*/
+  sendResponse('catch-service-disconnected');
   log('Socket closed.');
   if (!retrying && !doNotReconnect) {
     retrying = true;

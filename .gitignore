@@ -3,9 +3,12 @@
 # compiled output
 /tmp
 /out-tsc
-/dist/linux-unpacked
-/dist/*.snap
 /dist
+
+# pkg builds
+main-linux
+main-macos
+main-win.exe
 
 # dependencies
 /node_modules

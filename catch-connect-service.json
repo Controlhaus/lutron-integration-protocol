@@ -5,10 +5,10 @@
   "manufacturer": "Global Cache",
   "model": "iTach Flex Contact Closures",
   "buildUrls": {
-    "linux": "https://github.com/Controlhaus/global-cache-contact-closures/raw/master/main-linux",
-    "mac": "https://github.com/Controlhaus/global-cache-contact-closures/raw/master/main-macos",
+    "linux": "https://s3.eu-central-1.amazonaws.com/catch-connect-services/598b5519-6985-430c-aa7d-28dfa40d5ca1-0.0.1-linux-0.0.1-linux.ccs",
+    "mac": "https://s3.eu-central-1.amazonaws.com/catch-connect-services/598b5519-6985-430c-aa7d-28dfa40d5ca1-0.0.1-mac.ccs",
     "raspberryPi3": "",
-    "windows": "https://github.com/Controlhaus/global-cache-contact-closures/raw/master/main-win.exe"
+    "windows": "https://s3.eu-central-1.amazonaws.com/catch-connect-services/598b5519-6985-430c-aa7d-28dfa40d5ca1-0.0.1-win.ccs.exe"
   },
   "parameters": [
     {
