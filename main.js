@@ -2,7 +2,7 @@ const argv = require('yargs').argv;
 const repl = require('repl');
 const net = require('net');
 
-var serviceName = argv.serviceName;
+var serviceName = argv.serviceName || 'Global Cache Contact Closures';
 var ipAddress = argv.ipAddress;
 var port = argv.port || 4998;
 var relayPort = argv.relayPort || '1';
@@ -34,7 +34,11 @@ process.on("message", (data) => {
 });
 
 function sendResponse(response) {
-  process.send(response);
+  log(response);
+  //process.send() only exists if the app is started as a child process
+  if (typeof process.send === 'function') {
+    process.send(response);
+  }
 }
 
 /* Create Device Commands */

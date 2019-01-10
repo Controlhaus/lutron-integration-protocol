@@ -7,7 +7,7 @@
   "buildUrls": {
     "linux": "https://s3.eu-central-1.amazonaws.com/catch-connect-services/598b5519-6985-430c-aa7d-28dfa40d5ca1-0.0.1-linux-0.0.1-linux.ccs",
     "mac": "https://s3.eu-central-1.amazonaws.com/catch-connect-services/598b5519-6985-430c-aa7d-28dfa40d5ca1-0.0.1-mac.ccs",
-    "raspberryPi3": "",
+    "armv7": "https://s3.eu-central-1.amazonaws.com/catch-connect-services/598b5519-6985-430c-aa7d-28dfa40d5ca1-0.0.1-armv7.ccs",
     "windows": "https://s3.eu-central-1.amazonaws.com/catch-connect-services/598b5519-6985-430c-aa7d-28dfa40d5ca1-0.0.1-win.ccs.exe"
   },
   "parameters": [
