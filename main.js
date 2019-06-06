@@ -63,11 +63,14 @@ function processCommand(command) {
 /* Parse Device Responses */
 
 function parseResponse(response) {
-  log('Parsing response ' + response);
-  isAlive = true;
-  if (response != 'QNET> ') {
-    sendResponse(response);
+  log('Parsing response ' + response);  
+  responseArray = response.toString().split('\r\n');
+  for (var i = 0; i < responseArray.length; i++) {
+    if (responseArray[i] != 'QNET> ' && responseArray[i].length > 0 && isAlive === true) {
+      sendResponse(responseArray[i]);
+    }
   }
+  isAlive = true;
 }
 
 /* Socket Functions */

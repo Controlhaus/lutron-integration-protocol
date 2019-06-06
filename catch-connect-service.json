@@ -5,10 +5,10 @@
   "manufacturer": "Lutron",
   "model": "multiple",
   "buildUrls": {
-    "linux": "",
-    "mac": "",
-    "armv7": "",
-    "windows": ""
+    "linux": "https://s3.eu-central-1.amazonaws.com/catch-connect-services/577820df-5f19-43ed-baca-8c0dfcb4eb17-0.0.1-linux.ccs",
+    "mac": "https://s3.eu-central-1.amazonaws.com/catch-connect-services/577820df-5f19-43ed-baca-8c0dfcb4eb17-0.0.1-mac.ccs",
+    "armv7": "https://s3.eu-central-1.amazonaws.com/catch-connect-services/577820df-5f19-43ed-baca-8c0dfcb4eb17-0.0.1-armv7.ccs",
+    "windows": "https://s3.eu-central-1.amazonaws.com/catch-connect-services/577820df-5f19-43ed-baca-8c0dfcb4eb17-0.0.1-win.ccs.exe"
   },
   "parameters": [
     {
@@ -49,7 +49,7 @@
     },
     {
       "parameter": "heartbeatInterval",
-      "friendlyName": "IP Address",
+      "friendlyName": "Heartbeat Interval",
       "type": "string",
       "default": "10000",
       "required": true,
@@ -85,9 +85,9 @@
       ]
     },    
     {
-      "friendlyName": "Send Command",
+      "friendlyName": "Your Command",
       "editable": true,
-      "pattern": "send: COMMAND",
+      "pattern": "The command to send",
       "useHex": false,
       "endWith": "n",
       "descriptions": [
