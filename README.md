@@ -17,8 +17,8 @@ Create and login to the telnet connection to use with the [Lutron Integration Pr
 
 ## CLI Commands
 The following commands are available from the command line:  
-- ```connect``` Starts the TCP connection. Called by default at startup.    
-- ```close``` Closes the TCP connection.  
+- ```connect``` Starts the telnet connection. Called by default at startup.    
+- ```close``` Closes the telnet connection.  
 - ```MessageToSend``` Sends ```MessageToSend``` appended with a carriage return directly to the socket.  
 
 ## Lutron Integration Protocol  
