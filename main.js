@@ -1,12 +1,15 @@
 const argv = require('yargs').argv;
 const repl = require('repl');
-const net = require('net');
+const Telnet = require('telnet-client')
 
-var serviceName = argv.serviceName || 'Global Cache Contact Closures';
+var serviceName = argv.serviceName || 'Lutron';
 var ipAddress = argv.ipAddress;
-var port = argv.port || 4998;
-var relayPort = argv.relayPort || '1';
+var port = argv.port || 23;
+var login = argv.login || 'lutron';
+var password = argv.password || 'integration';
+var heartbeatInterval = argv.heartbeatInterval || 10000;
 var client;
+var heartbeat;
 var reconnectTimeout;
 var doNotReconnect;
 var retrying;
@@ -51,40 +54,8 @@ function processCommand(command) {
     case 'close\n':
       close();
       break;
-    case 'openRelay1\n':
-      sendToSocket('setstate,' + relayPort + ':1,0\r');
-      break;
-    case 'closeRelay1\n':
-      sendToSocket('setstate,' + relayPort + ':1,1\r');
-      break;
-    case 'getRelay1\n':
-      sendToSocket('getstate,' + relayPort + ':1\r');
-      break;
-    case 'openRelay2\n':
-      sendToSocket('setstate,' + relayPort + ':2,0\r');
-      break;
-    case 'closeRelay2\n':
-      sendToSocket('setstate,' + relayPort + ':2,1\r');
-      break;
-    case 'getRelay2\n':
-      sendToSocket('getstate,' + relayPort + ':2\r');
-      break;
-    case 'openRelay3\n':
-      sendToSocket('setstate,' + relayPort + ':3,0\r');
-      break;
-    case 'closeRelay3\n':
-      sendToSocket('setstate,' + relayPort + ':3,1\r');
-      break;
-    case 'getRelay3\n':
-      sendToSocket('getstate,' + relayPort + ':3\r');
-      break;
     default:
-      if (command.indexOf('send: ') == 0) {
-        const msg = command.substring(6);
-        sendToSocket(msg);
-        break;
-      }
-      log('Command not found for: ' + command);
+      sendToSocket(command);
       break;
   }
 }
@@ -92,58 +63,76 @@ function processCommand(command) {
 /* Parse Device Responses */
 
 function parseResponse(response) {
-  if (response.indexOf('state,' + relayPort + ':') != -1) {
-    const responseArray = response.split(',');
-    if (responseArray.length == 3) {
-      const portSlot = responseArray[1].split(':');
-      if (portSlot.length == 2) {
-        const slot = 'relay' + portSlot[1];
-        var value = false;
-        if (responseArray[2] == 1) {
-          value = true;
-        }
-        var result = {};
-        result[slot] = value;
-        sendResponse(JSON.stringify(result));
-      }
-    }
-  }
-  if (response.indexOf('err,' + relayPort + ':') != -1) {
-    var result = {};
-    result['error'] = value;
-    sendResponse(JSON.stringify(result));
+  log('Parsing response ' + response);
+  isAlive = true;
+  if (response != 'QNET> ') {
+    sendResponse(response);
   }
 }
 
 /* Socket Functions */
 
-function sendToSocket(message) {
+async function sendToSocket(message) {
   if (client) {
     log('Sending to socket: ' + message);
-    client.write(message);
+    client.send(message + '\r', (error, data) => {
+      // if (error) {
+      //   log("sendToSocket result error: ", error)
+      // }
+      // if (data) {
+      //   log("sendToSocket result data: ", data)
+      // }
+    });
   } else {
     log('Cannot send to undefined socket.');
   }
 }
 
-function connect() {
+async function connect() {
+  client = new Telnet();
   if (port && ipAddress) {
-    log('Connecting with ip address: ' + ipAddress + ' and port: ' + port);
-    client = new net.Socket();
-    client.connect(port, ipAddress);
-
-    client.on('data', (data) => {
-      const msg = data.toString();
-      parseResponse(msg);
-      log('Received from socket: ' + msg);
+    log('Connecting with ip address: ' + ipAddress + ' and port: ' + port + ' and login: ' + login);
+    var options = {
+      debug: true,
+      host: ipAddress,
+      port: port,
+      negotiationMandatory: true,
+      timeout: 0,
+      loginPrompt: 'login: ',
+      passwordPrompt: 'password: ',
+      username: login + '\r',
+      password: password + '\r',
+      shellPrompt: 'QNET>',
+    };
+    client.connect(options).catch((err) => {
+      errorEventHandler(err);
     });
 
-    client.on('connect', connectEventHandler.bind(this));
-    client.on('end', endEventHandler.bind(this));
-    client.on('timeout', timeoutEventHandler.bind(this));
-    client.on('drain', drainEventHandler.bind(this));
-    client.on('error', errorEventHandler.bind(this));
-    client.on('close', closeEventHandler.bind(this));
+    client.on('failedlogin', function () {
+      failedLoginEventHandler();
+    });
+
+    client.on('connect', function () {
+      log('logging in');
+    });
+
+    client.on('ready', function () {
+      log('logged in');
+      connectEventHandler();
+    });
+
+    client.on('data', data => {
+      parseResponse(data);
+    });
+
+    client.on('timeout', function () {
+      timeoutEventHandler();
+    });
+
+    client.on('close', function () {
+      closeEventHandler();
+    });
+
   } else {
     log('Cannot connect with ip address: ' + ipAddress + ' and port: ' + port);
   }
@@ -167,28 +156,52 @@ function connectEventHandler() {
   log('Socket connected.');
   sendResponse('catch-service-connected');
   retrying = false;
-  client.setKeepAlive(true);
+  clearInterval(reconnectTimeout);
+  startHearbeat();
 }
 
-function endEventHandler() {
-  sendResponse('catch-service-disconnected');
-  log('Socket end event.');
+function startHearbeat() {
+  isAlive = true;
+  heartbeat = setInterval(checkHeartbeat, heartbeatInterval);
+}
+
+function checkHeartbeat() {
+  if (isAlive === true) {
+    isAlive = false;
+    sendToSocket('gettime');
+    return;
+  }
+  log('Heartbeat timed out.');
+  doNotReconnect = false;
+  client.destroy();
+}
+
+function failedLoginEventHandler() {
+  sendResponse('catch-service-login-failed');
+  log('Failed Login.');
+  doNotReconnect = true;
+  client.destroy();
 }
 
 function timeoutEventHandler() {
-  sendResponse('catch-service-disconnected');
   log('Socket timeout event.');
-}
-
-function drainEventHandler() {
-  log('Socket drain event.');
+  doNotReconnect = false;
+  client.destroy();
 }
 
 function errorEventHandler(err) {
   log('Socket error: ' + err);
+  doNotReconnect = false;
+  client.destroy();
 }
 
 function closeEventHandler() {
+  if (heartbeat) {
+    clearInterval(heartbeat);
+  }
+  if (reconnectTimeout) {
+    clearInterval(reconnectTimeout);
+  }
   sendResponse('catch-service-disconnected');
   log('Socket closed.');
   if (!retrying && !doNotReconnect) {
