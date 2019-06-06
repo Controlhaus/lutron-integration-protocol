@@ -1,11 +1,11 @@
 # Lutron Integration Protocol
-Create the telnet connection to use with the [Lutron Integration Protocol](http://www.lutron.com/TechnicalDocumentLibrary/040249.pdf).  
+Create and login to the telnet connection to use with the [Lutron Integration Protocol](http://www.lutron.com/TechnicalDocumentLibrary/040249.pdf).  
 
 ## Usage  
-```git clone (repo URL)```   
-```cd template```  
+```git clone https://github.com/Controlhaus/lutron-integration-protocol.git```   
+```cd lutron-integration-protocol```  
 ```npm install```  
-```node main.js --ipAddress 192.168.1.2 --login test --password test```
+```node main.js --ipAddress TheLutronIpAddress --login test --password test```
 
 ### Start Parameters
 - ```serviceName``` A prefix for log messages. Default: ```Lutron```
